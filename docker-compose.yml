@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  geth:
+    image: docker.gbre.org/ethereum
+    build: ./ethereum
+    user: 1000:1000
+    ports:
+      - 30303:30303
+      - 8545:8545
+    volumes:
+      - /mnt/Scorpion/abi-cluster/test/geth:/home/ethereum/.ethereum
+      - /mnt/Raiden/abi-cluster/test/geth:/home/ethereum/.ethereum/keystore
+    restart: unless-stopped
+    command: --goerli
