@@ -1,5 +1,9 @@
 version: "3.5"
 services:
+  geth-base:
+    image: docker.gbre.org/geth-base
+    build: ./geth-base
+
   clef:
     image: docker.gbre.org/clef
     build: ./clef
