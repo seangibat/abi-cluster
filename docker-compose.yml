@@ -1,5 +1,16 @@
 version: "3.5"
 services:
+  clef:
+    image: ethersphere/clef:0.6.0
+    user: 1000:1000
+    volumes:
+      - /mnt/Scorpion/abi-cluster/test/clef:/home/ethereum/.clef
+      - /mnt/Scorpion/abi-cluster/test/geth:/home/ethereum/.ethereum
+      - /mnt/Raiden/abi-cluster/test/geth:/home/ethereum/.ethereum/keystore
+    # chain 5 = goerli
+    command: --chainid 5
+    restart: unless-stopped
+
   geth:
     image: docker.gbre.org/ethereum
     build: ./ethereum
@@ -8,7 +19,8 @@ services:
       - 30303:30303
       - 8545:8545
     volumes:
+      - /mnt/Scorpion/abi-cluster/test/clef:/home/ethereum/.clef
       - /mnt/Scorpion/abi-cluster/test/geth:/home/ethereum/.ethereum
       - /mnt/Raiden/abi-cluster/test/geth:/home/ethereum/.ethereum/keystore
+    command: --goerli --http --signer=.clef/clef.ipc
     restart: unless-stopped
-    command: --goerli
